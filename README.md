@@ -1,11 +1,42 @@
 # access-logs-aborted-requests
-A sandbox to play around access logs implementation behavior around aborted requests
 
-## Express server
+## Problem
 
-```js
+When the client aborts a request before the server is able to respond,
+then the response status code is always captured as `200`.
+
+## How to reproduce?
+
+A reproduction code is included for both [express](https://expressjs.com/) and [hapi.js](hapi.dev/). 
+The `server.js` and `hapi-server.js` scripts create a simple server with two endpoints:
+
+1. GET `/immediate` - responds back immediately
+2. GET `/delayed` - responds back after a delay of 100ms
+
+### Express server
+
+```bash
 node server.js
 ```
+
+### Hapi server
+
+```bash
+node hapi-server.js
+```
+
+## Test cases
+
+The `client.js` script performs two requests to the server:
+
+1. A request to GET `/immediate`
+2. A request to GET `/delayed`. This request is aborted after 10ms, long before the server responds back
+
+```bash
+node client.js
+```
+
+## Results
 
 ### Morgan
 
