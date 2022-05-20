@@ -19,7 +19,11 @@ Log is correct
 
 #### Aborted request
 
-Log is correct but response time is not included
+Log is correct but [response time](https://github.com/expressjs/morgan#response-timedigits) is not included, from morgan docs:
+
+> The time between the request coming into morgan and when the response headers are written, in milliseconds.
+
+When a request is aborted, response headers are never written.
 
 ```bash
 ::ffff:127.0.0.1 - - [Thu, 19 May 2022 14:57:24 GMT] "GET /delayed HTTP/1.1" - - "-" "-"
@@ -37,7 +41,7 @@ Log is correct
 
 #### Aborted request
 
-Log is not even generated
+Log is not created. There is an [open pull request](https://github.com/pinojs/pino-http/pull/123) to fix it.
 
 ```bash
 -
